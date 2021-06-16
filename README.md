@@ -1,6 +1,6 @@
 [backjoon-cpp-resolver] — 백씨리
 ===
-![사용예시](https://files.catbox.moe/k8lvxi.webp)
+![사용예시](https://files.catbox.moe/jdehxc.webp)
 
 backjoon-cpp-resolver(백씨리)는 Windows 운영체제에서 C++ 백준 알고리즘 풀이를 도와주는 nodejs 소도구입니다. 맥이랑 리눅스는 나도몰라
 
