@@ -66,10 +66,11 @@ async function main() {
         testCases = testCases.map((v, i) => [...v, `test case ${i + 1}`])
 
         testCases = [].concat(testCases, additionalCase.map((v, i) => [...v, `user case ${i + 1}`]))
-        for (const [testInput, testOutput, label] of testCases) {
-            const [result, time] = await execMain(testInput);
-
-            const isOK = result === testOutput
+        for (let [testInput, testOutput, label] of testCases) {
+            let [result, time] = await execMain(testInput);
+            result = result?.replace(/\s+$/,""); 
+            testOutput = testOutput?.replace(/\s+$/,"");             
+            const isOK = result == testOutput
             console.log(` - ${label} : ${isOK ? chalk.green("OK") : chalk.red("NG")}(${time}ms)`)
             if (!isOK) {
                 console.log(`\t- 예측 :${testOutput.replace(/\n/g," \\n ")}`)

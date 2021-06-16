@@ -1,15 +1,12 @@
-#include <stdio.h>
+#include <iostream>
+using namespace std;
  
 int main(int argc, char const *argv[]) {
-    
-    int A;
-    int B;
- 
-    scanf("%d", &A);
-    scanf("%d", &B);
- 
-    // scanf("%d %d", &A, &B); 로 바꾸어도 무방
-   
-    printf("%d", A + B);
-    return 0;
+    int num;
+    int result = 0; 
+    for(int i = 0; i < 5; i++){
+        cin >> num;
+        result += num*num;
+    }
+    cout << result%10 << endl;
 }
