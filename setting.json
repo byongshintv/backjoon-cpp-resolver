@@ -1,6 +1,7 @@
 {
-    "problemNo":1017,
+    "problemNo":1000,
     "input":"main.cpp",
     "output":"main",
-    "compilerPath":"C:/mingw64/bin/g++.exe"
-} 
+    "compilerPath":"C:/mingw64/bin/g++.exe",
+    "testcase":[["10 15","25"],["30 45","65"]]
+}  

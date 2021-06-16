@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "chai": "^4.3.4",
+    "chalk": "^4.1.1",
     "jquery": "^3.6.0",
     "jsdom": "^16.6.0",
     "jsom": "^1.0.0",

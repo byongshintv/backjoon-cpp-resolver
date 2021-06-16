@@ -7,6 +7,7 @@ backjoon-cpp-resolver는 백준 알고리즘 풀이를 도와주는 소도구입
 
 사용법
 ---
+* <a class="reference external" href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/sjlj/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0.7z" rel="nofollow">컴파일러 설치</a>
 * setting.json의 compilerPath를 실제 컴파일러 경로로 지정
 * 최초설치시 커널에서 npm 입력
 * 실행시 npm test입력

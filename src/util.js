@@ -1,5 +1,14 @@
 const fs = require("fs")
 
+async function asleep(interval, rInterval = 0){
+	return new Promise(async function(res,rej){
+		var addInterval = Math.random() * rInterval - (rInterval/2)
+		setTimeout(function(){
+			res()
+		}, interval + addInterval)
+	})
+
+}
 const watch = {
     file:(target,callback) => {
         let lastCompile = Date.now()
@@ -13,11 +22,11 @@ const watch = {
     },
     json:(target,watchKey,callback) => {
         let value = ''
-        function execute(){
+        async function execute(){
+            await asleep(10)
             const raw = fs.readFileSync(target,"utf-8");
-
-            const json = JSON.parse(raw)
             
+            const json = JSON.parse(raw)
             if(value !== json[watchKey]){
                 value = json[watchKey]
                 callback(value)

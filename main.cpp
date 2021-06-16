@@ -1,4 +1,15 @@
-#include <iostream> 
-int main(int argc, char* argv[]) { 
-    std::cout << "Hello World" << std::endl; return 0;  
-}   
+#include <stdio.h>
+ 
+int main(int argc, char const *argv[]) {
+    
+    int A;
+    int B;
+ 
+    scanf("%d", &A);
+    scanf("%d", &B);
+ 
+    // scanf("%d %d", &A, &B); 로 바꾸어도 무방
+   
+    printf("%d", A + B);
+    return 0;
+}
