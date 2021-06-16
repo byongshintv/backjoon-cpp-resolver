@@ -13,7 +13,7 @@
     "test": "node src/index"
   },
   "name": "backjoon-cpp-resolver",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "C++ 문제풀이",
   "main": "index.js",
   "author": "BANIP",
