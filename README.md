@@ -2,7 +2,7 @@
 ===
 ![사용예시](./asset/thumb.webp)
 
-backjoon-cpp-resolver(백씨리)는 Windows 운영체제에서 C++ 백준 알고리즘 풀이를 도와주는 nodejs 소도구입니다. 맥이랑 리눅스는 나도몰라
+backjoon-cpp-resolver(백씨리)는 Windows 운영체제에서 백준 C++문제 풀이를 도와주는 nodejs 소도구입니다. 맥이랑 리눅스는 나도몰라
 
 
 최초설치
@@ -27,7 +27,7 @@ npm test
 
 추가 사용법 
 ---
-* setting.json의 problemNo 필드에 문제번호 입력 
+* setting.json의 problemNo 필드에 문제번호 입력시 테스트케이스 및 문제내용 로딩
 * question.md로 문제 확인
 * setting.json의 testcase 필드에 [[input, output],[input, output]...] 형식으로 테스트 케이스 추가
 
