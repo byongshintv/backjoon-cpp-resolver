@@ -1,6 +1,6 @@
 const { asleep } = require('./util')
 const fs = require("fs")
-const exec = require('child_process').execFile;
+const {execFile:exec, spawn} = require('child_process');
 const { Readable } = require("stream")
 
 const watch = {
@@ -52,13 +52,21 @@ function getLiveJSON(fileName = "setting.json", defaultValue = {}) {
 function execIO(input, filename) {
     return new Promise((res, rej) => {
         const start = Date.now();
-        const child = exec(filename, function (err, stdout, stderr) {
-            if (err) rej(err)
-            if (stderr) rej(err)
-            res([stdout, Date.now() - start])
-        })
+        const child = spawn(filename)
+
+        
+        child.stdin.write(input)
+        child.stdout.on('data',(data) => {
+            res([data.toString().replace(/\r\n/g,"\n"), Date.now() - start])
+
+        });
+        child.stdin.end();
+
+
+        /*
         const readable = Readable.from(input.split("\n"))
         readable.pipe(child.stdin)
+        */
     })
 }
 
