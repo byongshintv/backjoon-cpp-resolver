@@ -1,12 +1,14 @@
 const fs = require("fs")
 const path = require("path")
 const exec = require('child_process').execFile;
-const { watch } = require('./util')
+const { watch } = require('./io')
 const { getProblemData } = require('./request')
 const { Readable } = require("stream")
 const chalk = require('chalk')
+
+//비동기로 실행되는 exec 함수, 사용법은 기존 콜백 대신 .then()혹은 await으로 리턴값 받기
 const execAsync = (...args) => {
-    return new Promise((res, rej) => {
+    return new Promise((res) => {
         args.push((...callbackArgs) => {
             res(callbackArgs)
         })
@@ -20,33 +22,35 @@ const filePath = {
     case: path.resolve(__dirname, './testcase.json'),
 }
 
-function execMain(input) {
-    return new Promise((res, rej) => {
-        const start = Date.now();
-        const child = exec(`./main.exe`, function (err, stdout, stderr) {
-            if (err) rej(err)
-            if (stderr) rej(err)
-            res([stdout, Date.now() - start])
-        })
-        const readable = Readable.from(input.split("\n"))
-        readable.pipe(child.stdin)
-    })
-}
-
 async function main() {
     let {
         input = "main.cpp",
         output = "main",
-        compilerPath,
-        testcase: additionalCase = []
+        compilerPath
     } = JSON.parse(await fs.readFileSync("setting.json"))
 
+    /**
+     * 컴파일된 exe파일을 실행, 출력값은 비동기로 반환
+     * @param {*} input exe파일의 입력값
+     */
+    function execMain(input) {
+        return new Promise((res, rej) => {
+            const start = Date.now();
+            const child = exec(`./${output}.exe`, function (err, stdout, stderr) {
+                if (err) rej(err)
+                if (stderr) rej(err)
+                res([stdout, Date.now() - start])
+            })
+            const readable = Readable.from(input.split("\n"))
+            readable.pipe(child.stdin)
+        })
+    }
+
+    // 두번째 이후 컴파일부터 출력되는 스타일링된 문제 제목 및 번호
     let header = ''
+
     async function triggeredSource(isClear = true) {
         let {
-            input = "main.cpp",
-            output = "main",
-            compilerPath,
             testcase: additionalCase = []
         } = JSON.parse(await fs.readFileSync("setting.json"))
 

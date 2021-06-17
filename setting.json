@@ -1,7 +1,8 @@
 {
-    "problemNo":2475,
+    "problemNo":11283, 
     "input":"main.cpp",
     "output":"main",
     "compilerPath":"C:/mingw64/bin/g++.exe",
-    "testcase":[]
+    "testcase":[],
+    "showInput":true
 }  
