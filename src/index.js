@@ -1,7 +1,7 @@
 const fs = require("fs")
 const path = require("path")
 const exec = require('child_process').execFile;
-const { watch } = require('./io')
+const { getLiveJSON,watch } = require('./io')
 const { getProblemData } = require('./request')
 const { Readable } = require("stream")
 const chalk = require('chalk')
@@ -22,12 +22,13 @@ const filePath = {
     case: path.resolve(__dirname, './testcase.json'),
 }
 
+const setting = getLiveJSON(filePath.setting,{
+    input : "main.cpp",
+    output : "main"
+})
+
+//const setting = ('./io').initLiveJSON
 async function main() {
-    let {
-        input = "main.cpp",
-        output = "main",
-        compilerPath
-    } = JSON.parse(await fs.readFileSync("setting.json"))
 
     /**
      * 컴파일된 exe파일을 실행, 출력값은 비동기로 반환
@@ -36,7 +37,7 @@ async function main() {
     function execMain(input) {
         return new Promise((res, rej) => {
             const start = Date.now();
-            const child = exec(`./${output}.exe`, function (err, stdout, stderr) {
+            const child = exec(`./${setting.get("output")}.exe`, function (err, stdout, stderr) {
                 if (err) rej(err)
                 if (stderr) rej(err)
                 res([stdout, Date.now() - start])
@@ -50,15 +51,17 @@ async function main() {
     let header = ''
 
     async function triggeredSource(isClear = true) {
-        let {
-            testcase: additionalCase = []
-        } = JSON.parse(await fs.readFileSync("setting.json"))
+        const additionalCase = setting.get("testcase")
 
         if (isClear) {
             console.clear()
-            console.log(input + " 컴파일 중...")
+            console.log(setting.get("input") + " 컴파일 중...")
         }
-        const compileResult = await execAsync(compilerPath, ['-o', output, input])
+        const compileResult = await execAsync(
+            setting.get("compilerPath"), 
+            ['-o', setting.get("output"), setting.get("input")]
+        )
+
         if (compileResult[0]) return console.log(chalk.red`컴파일 에러`)
         if (isClear) {
             console.clear()
@@ -84,7 +87,7 @@ async function main() {
         }
     }
 
-    watch.file(input, () => triggeredSource())
+    watch.file(setting.get("input"), () => triggeredSource())
 
     watch.json(filePath.setting, 'problemNo', async function (no) {
         const { descript, cases, title } = await getProblemData(no);

@@ -28,4 +28,17 @@ const watch = {
         return {trigger:() => execute()}
     }
 }
-module.exports = { watch }
+
+function getLiveJSON(fileName = "setting.json",defaultValue = {}){
+    return {
+        get : function(property){
+            try{
+                const json = JSON.parse(fs.readFileSync(fileName))
+                return json[property] || defaultValue[property]
+            } catch {
+                console.log(filename+"에 이상이 있습니다. 확인 해 주세요")
+            }
+        }
+    }
+}
+module.exports = { watch,getLiveJSON }
