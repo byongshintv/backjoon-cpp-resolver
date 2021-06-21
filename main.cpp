@@ -1,38 +1,22 @@
 #include <iostream>
-
 using namespace std;
+int main(void){
 
- 
+    int a, b,c;
+    long long result;
+    int arr[10] = {0,};
+    cin >> a >> b >> c;
+    result = a*b*c;
 
-int main(void)
+    while(result > 0){
+        arr[result % 10]++;
+        result /= 10;
+    }
 
-{
+    for(int i = 0; i < 10; i++){
+        cout << arr[i] << endl;
+    }
 
-        ios_base::sync_with_stdio(0);
-
-        cin.tie(0);
-
-        int A, B;
-
-        cin >> A >> B;
-
- 
-
-        int result = A * B;
-
-        while (B)
-
-        {
-
-                 cout << B % 10 * A << "\n";
-
-                 B /= 10;
-
-        }
-
-        cout << result << "\n";
-
-        return 0;
-
+        return 1;
 }
 

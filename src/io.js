@@ -53,8 +53,7 @@ function execIO(input, filename) {
     return new Promise((res, rej) => {
         const start = Date.now();
         const child = spawn(filename)
-
-        
+                
         child.stdin.write(input)
         child.stdout.on('data',(data) => {
             res([data.toString().replace(/\r\n/g,"\n"), Date.now() - start])
