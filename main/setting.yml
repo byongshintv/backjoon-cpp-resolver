@@ -1,0 +1,24 @@
+---
+# 문제번호
+problemNo: 2577
+
+# 테스트 실행 여부(false시 실행)
+printOnly: false
+
+# 추가적인 테스트케이스
+testcase: []
+
+# 입력파일
+input: main/main.cpp
+
+# 출력파일
+output: main/output/main
+
+# 문제출력파일
+question: main/question.md
+
+# g++ 컴파일러 위치
+compilerPath: C:/mingw64/bin/g++.exe
+
+
+... 

@@ -7,8 +7,7 @@ const { StringUtil } = require('./util')
 
 
 const filePath = {
-    setting: path.resolve(__dirname, '../setting.yml'),
-    question: path.resolve(__dirname, '../question.md'),
+    setting: path.resolve(__dirname, '../main/setting.yml'),
     case: path.resolve(__dirname, './temp/testcase.json'),
 }
 
@@ -80,9 +79,11 @@ async function main() {
 
     watch.file(setting.get("input"), () => triggeredSource())
 
-    watch.json(filePath.setting, 'problemNo', async function (no) {
+    watch.file(filePath.setting, async function () {
+        const no = setting.get("problemNo");
         const { descript, cases, title } = await getProblemData(no);
-        fs.writeFileSync(filePath.question, descript, "utf-8");
+        const questionPath = setting.get("question")
+        fs.writeFileSync(questionPath, descript, "utf-8");
         fs.writeFileSync(filePath.case, JSON.stringify(cases), "utf-8");
 
         Printer.clear();
@@ -91,7 +92,7 @@ async function main() {
         Printer.problem.title()
 
         triggeredSource(false);
-    }).trigger();
+    }).trigger()
 
 }
 

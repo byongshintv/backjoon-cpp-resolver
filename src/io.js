@@ -7,12 +7,21 @@ const watch = {
     file: (target, callback) => {
         let lastCompile = Date.now()
         const threshold = 100
-        fs.watch(target, async function () {
+        async function execute() {
             if (Date.now() - lastCompile < threshold) return
             lastCompile = Date.now()
+            await asleep(100);
 
             callback(fs.readFileSync(target, "utf-8"));
-        })
+        }
+
+        fs.watch(target, execute)
+
+        return { trigger: async (...args) => {
+            
+            await asleep(150);
+            execute(...args)
+        } }
     },
     json: (target, watchKey, callback) => {
         let value = ''
@@ -25,19 +34,17 @@ const watch = {
             }
         }
         watch.file(target, execute)
-        return { trigger: () => execute() }
+        return { trigger: () => {}}
     }
 }
 
 function getLiveJSON(fileName = "setting.json", defaultValue = {}) {
     return {
         get: function (property) {
-            try {
+
                 let json = parseJSONFile(fileName);
                 return json[property] || defaultValue[property]
-            } catch(e) {
-                console.log(filename + "에 이상이 있습니다. 확인 해 주세요")
-            }
+
         }
     }
 }
@@ -54,7 +61,6 @@ function parseJSONFile(path){
     } else if ( path.match(/\.yml$/) ){
         json = YAML.parse(raw);
     } else throw Error("올바르지 않은 JSON 파일입니다.")
-
     return json
 }
 
