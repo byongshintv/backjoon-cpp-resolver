@@ -4,5 +4,5 @@
     "output":"main",
     "compilerPath":"C:/mingw64/bin/g++.exe",
     "testcase":[],
-    "showInput":true
+    "printOnly":true
 }  
