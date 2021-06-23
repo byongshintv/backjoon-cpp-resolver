@@ -1,30 +1,17 @@
 const fs = require("fs")
-const path = require("path")
-const { getLiveJSON, watch, execIO, execAsync } = require('./io')
+const { watch, execIO, execAsync } = require('./io')
 const { getProblemData } = require('./request')
 const Printer = require('./Printer')
 const { StringUtil } = require('./util')
-
-
-const filePath = {
-    setting: path.resolve(__dirname, '../main/setting.yml'),
-    case: path.resolve(__dirname, './temp/testcase.json'),
-}
-
-const setting = getLiveJSON(filePath.setting, {
-    input: "main.cpp",
-    output: "main",
-    lang: "cpp"
-})
+const  { filePath, setting } = require('./constant')
 
 
 async function compile(isClear){
 
     if (isClear) Printer.compile.loading(setting.get("input"), isClear)
-    const compileResult = await execAsync(
-        setting.get("compilerPath"),
-        ['-o', setting.get("output"), setting.get("input")]
-    )
+
+    const { compilerPath, compilerArgument } = setting.get();
+    const compileResult = await execAsync(compilerPath, compilerArgument)
 
     if (compileResult[0]) {
         Printer.compile.complete(false)
@@ -39,14 +26,15 @@ async function compile(isClear){
 }
 
 async function test(){
-    const additionalCase = setting.get("testcase")
+    const { testcase:additionalCase, executeOperator } = setting.get()
+
     let testCases = JSON.parse(fs.readFileSync(filePath.case, 'utf-8'));
     testCases = testCases.map((v, i) => [...v, `test case ${i + 1}`])
 
     testCases = [].concat(testCases, additionalCase.map((v, i) => [...v, `user case ${i + 1}`]))
 
     for (let [testInput, testOutput, label] of testCases) {
-        let [result, time] = await execIO(testInput,`./${setting.get("output")}.exe`);
+        let [result, time] = await execIO(testInput,executeOperator);
         result = StringUtil.removeLastSpace(result);
         testOutput = StringUtil.removeLastSpace(testOutput);
 
@@ -71,9 +59,17 @@ async function execAndPrint(){
 
 async function main() {
     async function triggeredSource(isClear = true) {
-        const compileResult = await compile(true);
-        if(!compileResult) return
-        if(setting.get("printOnly")) return execAndPrint();
+        const {printOnly: isPrintOnly, canCompile} = setting.get()
+        
+        if(canCompile){
+            const compileResult = await compile(true);
+            if(!compileResult) return
+        } else {
+            Printer.clear()
+            Printer.problem.title()
+        }
+        
+        if( isPrintOnly ) return execAndPrint();
         await test();
     }
 

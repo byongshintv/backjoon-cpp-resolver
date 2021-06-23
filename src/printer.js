@@ -33,9 +33,11 @@ const printer = {
         },
         title:function(){
             const {title,no} = this.meta
-            const str = `\t${chalk.bold(`문제 : ${title}`)} (${no}번)\n\n`
+            const str = `\n\t${chalk.bold(`문제 : ${title}`)} (${no}번)\n\n`
             print(str)
         }
+    },
+    err: {
     }
 }
 

@@ -1,6 +1,6 @@
 ---
 # 문제번호
-problemNo: 2577
+problemNo: 1000
 
 # 테스트 실행 여부(false시 실행)
 printOnly: false
@@ -8,10 +8,10 @@ printOnly: false
 # 추가적인 테스트케이스
 testcase: []
 
-# 입력파일
-input: main/main.cpp
+# 입력파일 위치(확장자 js,cpp 호환)
+input: main/main.js
 
-# 출력파일
+# 컴파일된 출력파일 위치
 output: main/output/main
 
 # 문제출력파일

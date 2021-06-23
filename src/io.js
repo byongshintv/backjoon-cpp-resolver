@@ -38,13 +38,20 @@ const watch = {
     }
 }
 
-function getLiveJSON(fileName = "setting.json", defaultValue = {}) {
+function getLiveJSON(fileName = "setting.json", defaultValue = {}, flowSetting = () => ({})) {
     return {
         get: function (property) {
-
                 let json = parseJSONFile(fileName);
-                return json[property] || defaultValue[property]
+                let setting = {
+                    ...defaultValue,
+                    ...json,
+                }
+                setting = {
+                    ...setting,
+                    ...flowSetting(setting)
+                }
 
+                return property === undefined ? setting : setting[property];
         }
     }
 }
@@ -68,10 +75,15 @@ function parseJSONFile(path){
  * 컴파일된 exe파일을 실행, 출력값은 비동기로 반환
  * @param {*} input exe파일의 입력값
  */
-function execIO(input, filename) {
+function execIO(input, operation) {
     return new Promise((res, rej) => {
         const start = Date.now();
-        const child = spawn(filename)
+        let child
+        if(typeof operation === "string") { child = spawn(operation)}
+        else if(typeof operation === "object" && operation.length === 1 ) { child = spawn(operation[0])}
+        else if(typeof operation === "object" && operation.length > 1 ) { child = spawn(operation[0], operation.slice(1))}
+        else { throw new Error("알 수 없는 operation 형식입니다.") }
+        
                 
         child.stdin.write(input)
         child.stdout.on('data',(data) => {
