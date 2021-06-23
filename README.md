@@ -21,7 +21,7 @@ npm install
 실행법
 ---
 ```
-npm test
+npm start
 ```
 
 
@@ -31,3 +31,19 @@ npm test
 * question.md로 문제 확인
 * setting.json의 testcase 필드에 [[input, output],[input, output]...] 형식으로 테스트 케이스 추가
 
+
+버전 변경 내역
+---
+### 2.0v
+* **메인언어로 nodejs 지원**
+* 시작 명령어 npm test -> npm start로 변경
+* 세팅파일 json -> yml로 변경
+* 세팅파일 주석 추가
+* 사용자가 변경할만한 파일들을 main폴더에 몰아넣음
+* 문제 출력위치 지정 가능하게 변경
+
+todo
+---
+* 기본 지원언어 c, py, java 추가
+* 설정에따라 콘솔에 문제내용 출력여부 결정
+* 새로운 언어 추가하는 방법 가이드에 명세
