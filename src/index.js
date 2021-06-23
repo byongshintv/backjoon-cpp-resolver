@@ -7,7 +7,7 @@ const { StringUtil } = require('./util')
 
 
 const filePath = {
-    setting: path.resolve(__dirname, '../setting.json'),
+    setting: path.resolve(__dirname, '../setting.yml'),
     question: path.resolve(__dirname, '../question.md'),
     case: path.resolve(__dirname, './temp/testcase.json'),
 }

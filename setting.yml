@@ -1,0 +1,19 @@
+---
+# 문제번호
+problemNo: 2576
+
+# 입력파일
+input: main.cpp
+
+# 출력파일
+output: main
+
+# g++ 컴파일러 위치
+compilerPath: C:/mingw64/bin/g++.exe
+
+# 추가적인 테스트케이스
+testcase: []
+
+# 테스트 포함 여부
+printOnly: false
+...

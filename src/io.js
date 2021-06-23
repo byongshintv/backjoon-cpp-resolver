@@ -1,7 +1,7 @@
 const { asleep } = require('./util')
 const fs = require("fs")
 const {execFile:exec, spawn} = require('child_process');
-const { Readable } = require("stream")
+const YAML = require("yaml");
 
 const watch = {
     file: (target, callback) => {
@@ -17,10 +17,8 @@ const watch = {
     json: (target, watchKey, callback) => {
         let value = ''
         async function execute() {
-            await asleep(10)
-            const raw = fs.readFileSync(target, "utf-8");
-
-            const json = JSON.parse(raw)
+            await asleep(10);
+            let json = parseJSONFile(target);
             if (value !== json[watchKey]) {
                 value = json[watchKey]
                 callback(value)
@@ -35,15 +33,30 @@ function getLiveJSON(fileName = "setting.json", defaultValue = {}) {
     return {
         get: function (property) {
             try {
-                const json = JSON.parse(fs.readFileSync(fileName))
+                let json = parseJSONFile(fileName);
                 return json[property] || defaultValue[property]
-            } catch {
+            } catch(e) {
                 console.log(filename + "에 이상이 있습니다. 확인 해 주세요")
             }
         }
     }
 }
 
+/**
+ * *.json, *.yml과 같은 파일 파싱해서 읽어오는 함수
+ * @param {String} path json/yml파일의 경로 
+ */
+function parseJSONFile(path){
+    const raw = fs.readFileSync(path,"utf-8");
+    let json
+    if( path.match(/\.json$/) ){
+        json = JSON.parse(raw);
+    } else if ( path.match(/\.yml$/) ){
+        json = YAML.parse(raw);
+    } else throw Error("올바르지 않은 JSON 파일입니다.")
+
+    return json
+}
 
 /**
  * 컴파일된 exe파일을 실행, 출력값은 비동기로 반환
@@ -80,4 +93,4 @@ const execAsync = (...args) => {
 }
 
 
-module.exports = { watch, getLiveJSON, execIO, execAsync }
+module.exports = { watch, getLiveJSON, execIO, execAsync, parseJSONFile }
