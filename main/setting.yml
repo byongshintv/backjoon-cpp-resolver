@@ -9,7 +9,7 @@ printOnly: false
 testcase: []
 
 # 입력파일 위치(확장자 js,cpp 호환)
-input: main/main.js
+input: main/main.cpp
 
 # 컴파일된 출력파일 위치
 output: main/output/main
@@ -18,7 +18,9 @@ output: main/output/main
 question: main/question.md
 
 # g++ 컴파일러 위치
-compilerPath: C:/mingw64/bin/g++.exe
+compilerPaths: 
+  c++: C:/mingw64/bin/g++.exe
+
 
 
 ... 

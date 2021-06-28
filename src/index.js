@@ -1,29 +1,11 @@
 const fs = require("fs")
-const { watch, execIO, execAsync } = require('./io')
+const { watch, execIO, } = require('./io')
 const { getProblemData } = require('./request')
 const Printer = require('./Printer')
 const { StringUtil } = require('./util')
 const  { filePath, setting } = require('./constant')
+const { compile } = require("./compile")
 
-
-async function compile(isClear){
-
-    if (isClear) Printer.compile.loading(setting.get("input"), isClear)
-
-    const { compilerPath, compilerArgument } = setting.get();
-    const compileResult = await execAsync(compilerPath, compilerArgument)
-
-    if (compileResult[0]) {
-        Printer.compile.complete(false)
-        return false;
-    }
-    if (isClear) {
-        Printer.clear()
-        Printer.problem.title()
-    }
-    Printer.compile.complete(true)
-    return true;
-}
 
 async function test(){
     const { testcase:additionalCase, executeOperator } = setting.get()

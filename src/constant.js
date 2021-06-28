@@ -11,10 +11,11 @@ const languageMeta = [
     { 
         name:"c++",
         compile : ({output, input}) => (['-o', output, input]),
+        compilerName : "g++",
         match : ({input}) => input.match(/\.cpp$/)
     },
     { 
-        name:"nodejs",
+        name:"javascript",
         execute : ({input}) => ['node',input],
         match : ({input}) => input.match(/\.js$/)
     },
@@ -28,11 +29,13 @@ const languageMeta = [
 const setting = getLiveJSON(filePath.setting, {
     input: "main.cpp",
     output: "main",
-    lang: "cpp"
 },(setting) => {
     const langSetting = languageMeta.filter(v => v.match(setting))[0];
     const defaultSetting = languageMeta.filter(v => v.name === "default")[0];
+
     return {
+        compilerPath:setting.compilerPaths[langSetting.name],
+        compilerName:langSetting.compilerName,
         languageName:langSetting.name,
         canCompile:langSetting.compile !== undefined,
         compilerArgument:langSetting.compile?.(setting),
