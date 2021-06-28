@@ -7,7 +7,8 @@ const printer = {
         title:(label,isOK,time) => {
             print(` - ${label} : ${isOK ? chalk.green("OK") : chalk.red("NG")}(${time}ms)`)
         },
-        expected:(expected,result) => {
+        expected:(inputed,expected,result) => {
+            print(`\t- 입력 :${inputed}`)
             print(`\t- 예측 :${expected}`)
             print(`\t- 결과 :${result}`)
         }
@@ -38,6 +39,7 @@ const printer = {
         }
     },
     err: {
+        runtime:function(){ print(chalk.red`런타임 에러`) }
     }
 }
 

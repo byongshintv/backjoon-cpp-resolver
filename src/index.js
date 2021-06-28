@@ -16,7 +16,14 @@ async function test(){
     testCases = [].concat(testCases, additionalCase.map((v, i) => [...v, `user case ${i + 1}`]))
 
     for (let [testInput, testOutput, label] of testCases) {
-        let [result, time] = await execIO(testInput,executeOperator);
+        try{
+            var [result, time] = (await execIO(testInput,executeOperator))
+        } catch(e) {
+
+            Printer.err.runtime()
+            console.log(e)
+            break;
+        }
         result = StringUtil.removeLastSpace(result);
         testOutput = StringUtil.removeLastSpace(testOutput);
 
@@ -25,6 +32,7 @@ async function test(){
 
         if (!isOK)
             Printer.testcase.expected(
+                StringUtil.escapeNewline(testInput),
                 StringUtil.escapeNewline(testOutput),
                 StringUtil.escapeNewline(result)
             )
@@ -50,7 +58,7 @@ async function main() {
             Printer.clear()
             Printer.problem.title()
         }
-        
+
         if( isPrintOnly ) return execAndPrint();
         await test();
     }

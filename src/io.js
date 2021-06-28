@@ -90,6 +90,11 @@ function execIO(input, operation) {
             res([data.toString().replace(/\r\n/g,"\n"), Date.now() - start])
 
         });
+
+        child.stderr.on('data', function(data) {
+            rej(data.toString())
+        });
+
         child.stdin.end();
 
 

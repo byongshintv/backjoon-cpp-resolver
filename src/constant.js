@@ -34,7 +34,8 @@ const setting = getLiveJSON(filePath.setting, {
     const defaultSetting = languageMeta.filter(v => v.name === "default")[0];
 
     return {
-        compilerPath:setting.compilerPaths[langSetting.name],
+
+        compilerPath:setting.compilerPaths?.[langSetting.name],
         compilerName:langSetting.compilerName,
         languageName:langSetting.name,
         canCompile:langSetting.compile !== undefined,

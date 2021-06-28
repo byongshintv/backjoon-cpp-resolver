@@ -14,8 +14,7 @@ async function getCompilerPath(){
 
     if(!compilerName) throw Error(errmsg.notDefined)
 
-    
-    if( compilerPath ){
+    if( compilerPath === undefined){
         //경우1 컴파일러 경로가 기술되지 않은 경우
         let [compilerNotFound] = await execAsync(compilerName,checkVersionArgs)
         if(compilerNotFound) throw Error(errmsg.notFoundAllCompiler) //기본 컴파일러가 없을 경우 예외 반환
