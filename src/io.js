@@ -84,11 +84,13 @@ function execIO(input, operation) {
         else if(typeof operation === "object" && operation.length > 1 ) { child = spawn(operation[0], operation.slice(1))}
         else { throw new Error("알 수 없는 operation 형식입니다.") }
         
-                
+        let result = ""
         child.stdin.write(input)
         child.stdout.on('data',(data) => {
-            res([data.toString().replace(/\r\n/g,"\n"), Date.now() - start])
-
+            result += data.toString().replace(/\r\n/g,"\n")
+        });
+        child.stdout.on('end',(data) => {
+            res([result,Date.now() - start])
         });
 
         child.stderr.on('data', function(data) {

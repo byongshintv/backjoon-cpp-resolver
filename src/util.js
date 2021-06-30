@@ -9,6 +9,6 @@ async function asleep(interval, rInterval = 0) {
 
 const StringUtil = {
 	removeLastSpace: (str) => str.replace(/\s+$/, ""),
-	escapeNewline: (str) => str.replace(/\n/g, " \\n ")
+	escapeNewline: (str) => str.replace(/\n/g, " \\n ").replace(/\n\s+\n/g, "\\n")
 }
 module.exports = { asleep,StringUtil }

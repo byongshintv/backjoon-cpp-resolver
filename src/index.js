@@ -40,9 +40,9 @@ async function test(){
 }
 
 async function execAndPrint(){
-    let testCases = JSON.parse(fs.readFileSync(filePath.case, 'utf-8'));
+    const { testcase, executeOperator } = setting.get()
 
-    let [result, time] = await execIO(testCases[0][0],`./${setting.get("output")}.exe`);
+    let [result, time] = (await execIO(testcase[0][0],executeOperator))
     console.log(result);
 }
 
