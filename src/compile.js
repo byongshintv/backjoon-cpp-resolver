@@ -4,8 +4,8 @@ const { setting, filePath } = require('./constant');
 
 
 async function getCompilerPath(){
-    let {compilerPath, compilerName} = setting.get() 
-    const checkVersionArgs = ["--version"]
+    let {compilerPath, compilerName, versionArgs} = setting.get() 
+    const checkVersionArgs = [versionArgs]
     const errmsg = {
         notDefined: "컴파일러가 기술되지 않은 언어에 컴파일을 시도했습니다.",
         notFoundAllCompiler: `컴파일러를 찾을 수 없습니다. \n\t "${compilerName}"가 위치한 폴더를 환경변수로 정의 해 주시거나, ${filePath.setting}에 컴파일러의 경로를 기술 해 주세요.`,
@@ -42,7 +42,6 @@ async function compile(isClear) {
     if (isClear) Printer.compile.loading(setting.get("input"), isClear);
 
     const compileResult = await execAsync(compilerPath, compilerArgument);
-
     if (compileResult[0]) {
         Printer.compile.complete(false);
         return false;

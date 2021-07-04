@@ -1,6 +1,6 @@
 ---
 # 문제번호
-problemNo: 14928
+problemNo: 2557
 
 # 테스트 실행 여부(false시 실행)
 printOnly: false
@@ -8,18 +8,20 @@ printOnly: false
 # 추가적인 테스트케이스
 testcase: []
 
-# 입력파일 위치(확장자 js,cpp 호환)
-input: main/main.js
-
-# 컴파일된 출력파일 위치
-output: main/output/main
+# 입력파일명 (반드시 main 폴더에 위치해야 함)
+  # 단 자바는 언어 명세에 의해 반드시 Main.java 여야만 함
+  # 코틀린은 안써봐서 모름
+  # 파일명 node.js 라고 하면 vscode에서 창이 뜸 존나 신기하다
+input: py.py
 
 # 문제출력파일
 question: main/question.md
 
 # g++ 컴파일러 위치
 compilerPaths: 
-  c++: C:/mingw64/bin/g++.exe
+  c++: g++
+  c: gcc
+  java: javac
 
 
 
