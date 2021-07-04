@@ -34,6 +34,14 @@ npm start
 
 버전 변경 내역
 ---
+### 2.1v (기여자 마히로콘)
+업데이트 후 실행이 안되면 `npm update`혹은 `yarn`을 때려주세요
+* **메인언어로 python, c, java, kotline 지원**
+* **리눅스, mac등 posix 운영체제 지원(맥 테스트 안해봄)**
+* 컴파일전 컴파일러 존재여부 확인용 버전체크 아규먼트 언어별로 분리하여 관리
+* unix 계열 운영체제 지원용 cross-spawn모듈 추가 
+
+
 ### 2.0v
 * **메인언어로 nodejs 지원**
 * 시작 명령어 npm test -> npm start로 변경
