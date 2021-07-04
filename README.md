@@ -39,7 +39,7 @@ npm start
 * **메인언어로 python, c, java, kotline 지원**
 * **리눅스, mac등 posix 운영체제 지원(맥 테스트 안해봄)**
 * 컴파일전 컴파일러 존재여부 확인용 버전체크 아규먼트 언어별로 분리하여 관리
-* unix 계열 운영체제 지원용 cross-spawn모듈 추가 
+* 윈도우 운영체제 지원용 cross-spawn모듈 추가 
 
 
 ### 2.0v
