@@ -1,4 +1,5 @@
 const fs = require("fs")
+const path = require('path')
 const { watch, execIO, } = require('./io')
 const { getProblemData } = require('./request')
 const Printer = require('./Printer')
@@ -14,7 +15,6 @@ async function test(){
     testCases = testCases.map((v, i) => [...v, `test case ${i + 1}`])
 
     testCases = [].concat(testCases, additionalCase.map((v, i) => [...v, `user case ${i + 1}`]))
-
     for (let [testInput, testOutput, label] of testCases) {
         try{
             var [result, time] = (await execIO(testInput,executeOperator))
@@ -49,7 +49,7 @@ async function execAndPrint(){
 
 async function main() {
     async function triggeredSource(isClear = true) {
-        const {printOnly: isPrintOnly, canCompile} = setting.get()
+        const {printOnly: isPrintOnly, canCompile, executeFileName} = setting.get()
         
         if(canCompile){
             const compileResult = await compile(true);
@@ -61,9 +61,12 @@ async function main() {
 
         if( isPrintOnly ) return execAndPrint();
         await test();
+        if (executeFileName) {
+            fs.unlinkSync(path.join(__dirname, '..', 'main', executeFileName));
+        }
     }
 
-    watch.file(setting.get("input"), () => triggeredSource())
+    watch.file(path.join('main', setting.get("input")), () => triggeredSource())
 
     watch.file(filePath.setting, async function () {
         const no = setting.get("problemNo");

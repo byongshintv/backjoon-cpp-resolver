@@ -1,6 +1,8 @@
 const { asleep } = require('./util')
 const fs = require("fs")
-const {execFile:exec, spawn} = require('child_process');
+const path = require('path')
+const spawn = require('cross-spawn');
+const {execFile} = require('child_process');
 const YAML = require("yaml");
 
 const watch = {
@@ -71,6 +73,11 @@ function parseJSONFile(path){
     return json
 }
 
+
+
+
+
+
 /**
  * 컴파일된 exe파일을 실행, 출력값은 비동기로 반환
  * @param {*} input exe파일의 입력값
@@ -79,9 +86,10 @@ function execIO(input, operation) {
     return new Promise((res, rej) => {
         const start = Date.now();
         let child
-        if(typeof operation === "string") { child = spawn(operation)}
-        else if(typeof operation === "object" && operation.length === 1 ) { child = spawn(operation[0])}
-        else if(typeof operation === "object" && operation.length > 1 ) { child = spawn(operation[0], operation.slice(1))}
+        option = {cwd: path.join(__dirname, '..', 'main')}
+        if(typeof operation === "string") { child = spawn(operation, option)}
+        else if(typeof operation === "object" && operation.length === 1 ) { child = spawn(operation[0], [], option)}
+        else if(typeof operation === "object" && operation.length > 1 ) { child = spawn(operation[0], operation.slice(1), option)}
         else { throw new Error("알 수 없는 operation 형식입니다.") }
         
         let result = ""
@@ -113,9 +121,8 @@ const execAsync = (...args) => {
         args.push((...callbackArgs) => {
             res(callbackArgs)
         })
-        exec(...args)
+        execFile(...args)
     })
 }
-
 
 module.exports = { watch, getLiveJSON, execIO, execAsync, parseJSONFile }

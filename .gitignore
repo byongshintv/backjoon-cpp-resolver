@@ -1,3 +1,5 @@
 node_modules
 question.md
 ./src/testcase.json
+/main/*
+!/main/setting.yml
