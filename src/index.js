@@ -19,7 +19,6 @@ async function test(){
         try{
             var [result, time] = (await execIO(testInput,executeOperator))
         } catch(e) {
-
             Printer.err.runtime()
             console.log(e)
             break;

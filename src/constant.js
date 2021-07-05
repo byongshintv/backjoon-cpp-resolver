@@ -44,7 +44,10 @@ const languageMeta = [
     },
     { 
         name:"python",
-        execute : ({input}) => ['python', input],
+        execute : ({input}) => {
+            if(process.platform === "win32") return ['py', input]
+                else ['python', input]
+        },
         match : ({input}) => input.match(/\.py$/),
         versionArgs: '--version'
     },
