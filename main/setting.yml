@@ -9,7 +9,7 @@ printOnly: false
 testcase: []
 
 # 입력파일명 (*.c, *.cpp, *.kt, *.py, *.js, Main.java(언어 명세에 의해 반드시 Main.java여야함))지원
-input: py.py
+input: main.cpp
 
 # 문제출력파일
 question: main/question.md

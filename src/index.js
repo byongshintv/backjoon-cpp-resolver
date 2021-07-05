@@ -3,7 +3,7 @@ const path = require('path')
 const { watch, execIO, } = require('./io')
 const { getProblemData } = require('./request')
 const Printer = require('./Printer')
-const { StringUtil } = require('./util')
+const { StringUtil, asleep } = require('./util')
 const  { filePath, setting } = require('./constant')
 const { compile } = require("./compile")
 
@@ -62,6 +62,7 @@ async function main() {
         if( isPrintOnly ) return execAndPrint();
         await test();
         if (executeFileName) {
+            await asleep(50)
             fs.unlinkSync(path.join(__dirname, '..', 'main', executeFileName));
         }
     }
