@@ -11,18 +11,14 @@ const languageMeta = [
     { 
         name:"c",
         compile : ({output, input}) => (['-o', path.join('main', 'main'), path.join('main', input)]),
-        executeFileName: 'main.exe',
         compilerName : "gcc",
         match : ({input}) => input.match(/\.c$/),
-        versionArgs: '--version'
     },
     { 
         name:"c++",
         compile : ({output, input}) => (['-o', path.join('main', 'main'), path.join('main', input)]),
-        executeFileName: 'main.exe',
         compilerName : "g++",
         match : ({input}) => input.match(/\.cpp$/),
-        versionArgs: '--version'
     },
     { 
         name:"java",
@@ -49,17 +45,15 @@ const languageMeta = [
                 else ['python', input]
         },
         match : ({input}) => input.match(/\.py$/),
-        versionArgs: '--version'
     },
     { 
         name:"javascript",
         execute : ({input}) => ['node',input],
         match : ({input}) => input.match(/\.js$/),
-        versionArgs: '--version'
     },
     {
         name:"default",
-        execute : () => `main.exe`,
+        executeFileName: 'main.exe',
         match : () => true,
         versionArgs: '--version'
     }
@@ -73,9 +67,9 @@ const setting = getLiveJSON(filePath.setting, {
     const defaultSetting = languageMeta.filter(v => v.name === "default")[0];
 
     return {
-        versionArgs: langSetting.versionArgs,
+        versionArgs: langSetting.versionArgs || defaultSetting.versionArgs,
         compilerPath:setting.compilerPaths?.[langSetting.name],
-        executeFileName: langSetting.executeFileName,
+        executeFileName: langSetting.executeFileName || defaultSetting.executeFileName,
         compilerName:langSetting.compilerName,
         languageName:langSetting.name,
         canCompile:langSetting.compile !== undefined,
