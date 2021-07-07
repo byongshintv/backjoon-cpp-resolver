@@ -93,16 +93,18 @@ function execIO(input, operation) {
         else { throw new Error("알 수 없는 operation 형식입니다.") }
         
         let result = ""
+        let errs = []
         child.stdin.write(input)
         child.stdout.on('data',(data) => {
             result += data.toString().replace(/\r\n/g,"\n")
         });
         child.stdout.on('end',(data) => {
-            res([result,Date.now() - start])
+            if(errs.length === 0) return res([result,Date.now() - start])
+            rej(errs.join("\n"))
         });
 
         child.stderr.on('data', function(data) {
-            rej(data.toString())
+            errs.push(data.toString())
         });
 
         child.stdin.end();
