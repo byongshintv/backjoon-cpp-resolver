@@ -21,6 +21,13 @@ const languageMeta = [
         match : ({input}) => input.match(/\.cpp$/),
     },
     { 
+        name:"go",
+        compile : ({output, input}) => (['build','-o', path.join('main', 'main.exe'), path.join('main', input)]),
+        compilerName : "go",
+        match : ({input}) => input.match(/\.go$/),
+        versionArgs: 'version'
+    },
+    { 
         name:"java",
         compile : ({output, input}) => (['-d', 'main', path.join('main', input)]),
         execute : ({output}) => `java Main`,
@@ -53,6 +60,7 @@ const languageMeta = [
     },
     {
         name:"default",
+        execute : ({output}) => `main.exe`,
         executeFileName: 'main.exe',
         match : () => true,
         versionArgs: '--version'

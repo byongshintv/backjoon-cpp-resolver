@@ -87,6 +87,7 @@ function execIO(input, operation) {
         const start = Date.now();
         let child
         option = {cwd: path.join(__dirname, '..', 'main')}
+
         if(typeof operation === "string") { child = spawn(operation, option)}
         else if(typeof operation === "object" && operation.length === 1 ) { child = spawn(operation[0], [], option)}
         else if(typeof operation === "object" && operation.length > 1 ) { child = spawn(operation[0], operation.slice(1), option)}

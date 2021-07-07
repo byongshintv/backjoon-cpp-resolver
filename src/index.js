@@ -17,6 +17,7 @@ async function test(){
     testCases = [].concat(testCases, additionalCase.map((v, i) => [...v, `user case ${i + 1}`]))
     for (let [testInput, testOutput, label] of testCases) {
         try{
+
             var [result, time] = (await execIO(testInput,executeOperator))
         } catch(e) {
             Printer.err.runtime()
