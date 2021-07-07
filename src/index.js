@@ -61,7 +61,7 @@ async function main() {
 
         if( isPrintOnly ) return execAndPrint();
         await test();
-        if (executeFileName) {
+        if (canCompile) {
             await asleep(50)
             fs.unlinkSync(path.join(__dirname, '..', 'main', executeFileName));
         }
