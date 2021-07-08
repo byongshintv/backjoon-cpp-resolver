@@ -43,6 +43,7 @@ async function compile(isClear) {
 
     const compileResult = await execAsync(compilerPath, compilerArgument);
     if (compileResult[0]) {
+        console.log(compileResult[0])
         Printer.compile.complete(false);
         return false;
     }
