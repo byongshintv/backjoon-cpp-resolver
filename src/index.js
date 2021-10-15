@@ -42,21 +42,21 @@ async function test(){
 async function execAndPrint(){
     const { testcase, executeOperator } = setting.get()
 
-    let [result, time] = (await execIO(testcase[0][0],executeOperator))
+    let [result, time] = (await execIO(testcase?.[0]?.[0] || "",executeOperator))
     console.log(result);
 }
 
 
 async function main() {
     async function triggeredSource(isClear = true) {
-        const {printOnly: isPrintOnly, canCompile, executeFileName} = setting.get()
-        
+        const {printOnly: isPrintOnly, canCompile, executeFileName, hideInfomation} = setting.get()
+
         if(canCompile){
             const compileResult = await compile(true);
             if(!compileResult) return
         } else {
             Printer.clear()
-            Printer.problem.title()
+            Printer.problem.title(hideInfomation)
         }
 
         if( isPrintOnly ) return execAndPrint();
@@ -66,8 +66,10 @@ async function main() {
             fs.unlinkSync(path.join(__dirname, '..', 'main', executeFileName));
         }
     }
-
-    watch.file(path.join('main', setting.get("input")), () => triggeredSource())
+    
+    fs.readdirSync("./main").filter(v => v.match(/main\.*/)).forEach(filename => {
+        watch.file(path.join('main',filename), () => triggeredSource())
+    })
 
     watch.file(filePath.setting, async function () {
         const no = setting.get("problemNo");
@@ -83,7 +85,7 @@ async function main() {
 
         triggeredSource(false);
     }).trigger()
-
+ 
 }
 
 main();

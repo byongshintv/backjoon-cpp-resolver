@@ -1,7 +1,6 @@
 ---
-# 문제번호
-problemNo: 1316
-
+# 문제번호 다음문제
+problemNo: 12605
 # 테스트 실행 여부(false시 실행)
 printOnly: false
 
@@ -14,13 +13,14 @@ input: main.js
 # 문제출력파일
 question: main/question.md
 
+# 문제 번호 이외의 정보 감추기
+hideInfomation: true
+
 # g++ 컴파일러 위치
 compilerPaths: 
   c++: g++
   c: gcc
   java: javac
   kotlin: C:\compiler\kotlinc\bin\kotlinc
-
-
 
 ... 

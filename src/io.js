@@ -82,10 +82,10 @@ function parseJSONFile(path){
  * 컴파일된 exe파일을 실행, 출력값은 비동기로 반환
  * @param {*} input exe파일의 입력값
  */
+ let child
 function execIO(input, operation) {
     return new Promise((res, rej) => {
-        const start = Date.now();
-        let child
+        if(child) child.stdin.destroy();
         option = {cwd: path.join(__dirname, '..', 'main')}
 
         if(typeof operation === "string") { child = spawn(operation, option)}
@@ -95,13 +95,14 @@ function execIO(input, operation) {
         
         let result = ""
         let errs = []
+        let start = Date.now();
         child.stdin.write(input)
         child.stdout.on('data',(data) => {
             result += data.toString().replace(/\r\n/g,"\n")
         });
         child.stdout.on('end',(data) => {
             if(errs.length === 0) return res([result,Date.now() - start])
-            rej(errs.join("\n"))
+            rej(result + "\n" + errs.join("\n"))
         });
 
         child.stderr.on('data', function(data) {

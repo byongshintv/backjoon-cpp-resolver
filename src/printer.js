@@ -1,5 +1,6 @@
 
 const chalk = require('chalk')
+
 const print = console.log;
 const printer = {
     clear : console.clear,
@@ -20,8 +21,6 @@ const printer = {
         complete:(isok) => {
             if(isok) print(chalk.green` 컴파일 성공.\n`)
                 else print(chalk.red`컴파일 에러`)
-            
-            
         }
     },
     problem:{
@@ -32,9 +31,9 @@ const printer = {
         setTitle:function(title, no){
             this.meta = {title,no}
         },
-        title:function(){
+        title:function(hideInfomation){
             const {title,no} = this.meta
-            const str = `\n\t${chalk.bold(`문제 : ${title}`)} (${no}번)\n\n`
+            const str = hideInfomation ? no : `\n\t${chalk.bold(`문제 : ${title}`)} (${no}번)\n\n`
             print(str)
         }
     },
