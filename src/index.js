@@ -30,12 +30,15 @@ async function test(){
         const isOK = result == testOutput
         Printer.testcase.title(label, isOK, time)
 
-        if (!isOK)
+        const { escapeNewLine } = setting.get()
+        if (!isOK){
+            const formatter = escapeNewLine ? (v) => v.replace(/\n/g,"\n\t\t") :  StringUtil.escapeNewline; 
             Printer.testcase.expected(
-                StringUtil.escapeNewline(testInput),
-                StringUtil.escapeNewline(testOutput),
-                StringUtil.escapeNewline(result)
+                formatter(testInput),
+                formatter(testOutput),
+                formatter(result)
             )
+        }
     }
 }
 
