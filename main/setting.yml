@@ -1,14 +1,13 @@
 ---
 # 문제번호 다음문제
-problemNo: 13460
+problemNo: 1000
 # 테스트 실행 여부(false시 실행)
 printOnly: false
 
 # 추가적인 테스트케이스
 testcase: []
-
 # 입력파일명 (*.c, *.cpp, *.kt, *.py, *.js, Main.java(언어 명세에 의해 반드시 Main.java여야함))지원
-input: main.js
+input: main.kt
 
 # 문제출력파일
 question: main/question.md
@@ -24,6 +23,6 @@ compilerPaths:
   c++: g++
   c: gcc
   java: javac
-  kotlin: C:\compiler\kotlinc\bin\kotlinc
+  kotlin: C:\compiler\kotlinc\bin\kotlinc-native.bat
 
 ... 

@@ -38,13 +38,11 @@ const languageMeta = [
     },
     { 
         name:"kotlin",
-        compile : ({output, input}) => (['-d', 'main', path.join('main', input)]),
-        execute : ({output}) => `java Main`,
-        executeFileName: 'Main.class',
-        compilerName : "kotlinc",
+        compile : ({output, input}) => (['-o',path.join('main', output), path.join('main', input)]),
+        compilerName : "kotlinc-native",
         match : ({input}) => input.match(/\.kt$/),
         versionArgs: '-version'
-    },
+    }, 
     { 
         name:"python",
         execute : ({input}) => {
