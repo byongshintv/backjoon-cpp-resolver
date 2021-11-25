@@ -56,6 +56,12 @@ const languageMeta = [
         execute : ({input}) => ['node',input],
         match : ({input}) => input.match(/\.js$/),
     },
+    { 
+        name:"haskell",
+        compile : ({output, input}) => (['-o', path.join('main', 'main'), path.join('main', input)]),
+        compilerName : "ghc",
+        match : ({input}) => input.match(/\.hs$/),
+    },
     {
         name:"default",
         execute : ({output}) => `main.exe`,
