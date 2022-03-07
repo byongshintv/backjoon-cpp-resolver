@@ -20,5 +20,8 @@
   "description": "C++/node 문제풀이",
   "main": "index.js",
   "author": "BANIP",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "https-proxy-agent": "^5.0.0"
+  }
 }

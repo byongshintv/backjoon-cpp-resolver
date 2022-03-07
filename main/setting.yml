@@ -1,6 +1,6 @@
 ---
 # 문제번호 2991
-problemNo: 6322
+problemNo: 1000
 # 테스트 실행 여부(false시 실행)
 printOnly: false
 
@@ -8,13 +8,13 @@ printOnly: false
 testcase: []
 
 # 입력파일명 (*.c, *.cpp, *.kt, *.py, *.js, Main.java(언어 명세에 의해 반드시 Main.java여야함))지원
-input: main.c
+input: main.js
 
 # 문제출력파일
 question: main/question.md
 
 # 문제 번호 이외의 정보 감추기
-hideInfomation: true
+hideInfomation: false
 
 # 모든 문제 한줄에 표시
 escapeNewLine: false
