@@ -1,12 +1,13 @@
 
 const chalk = require('chalk')
+const {setting} = require('./constant')
 
 const print = console.log;
 const printer = {
     clear : console.clear,
     testcase:{
         title:(label,isOK,time) => {
-            print(` - ${label} : ${isOK ? chalk.green("OK") : chalk.red("NG")}(${time}ms)`)
+            print(` - ${label} : ${isOK ? chalk.green("OK") : chalk.red("NG")}(${time.toFixed(setting.get("execTimeFloatPoint"))}ms)`)
         },
         expected:(inputed,expected,result) => {
             print(`\t- 입력 :${inputed}`)

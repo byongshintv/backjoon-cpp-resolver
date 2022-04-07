@@ -1,6 +1,6 @@
 ---
 # 문제번호 2991
-problemNo: 1024
+problemNo: 11921
 # 테스트 실행 여부(false시 실행)
 printOnly: false
 
@@ -14,10 +14,16 @@ input: main.js
 question: main/question.md
 
 # 문제 번호 이외의 정보 감추기
-hideInfomation: false
+hideInfomation: true
 
-# 모든 문제 한줄에 표시
-escapeNewLine: false
+# 문제 입출력의 줄바꿈을 \n기호로 변경
+escapeNewLine: true
+
+# 수행시간의 소수점 반올림 단위
+execTimeFloatPoint: 3
+
+# 무한루프 방지용 런타임 실행 제한시간
+timeout: 5000
 
 # g++ 컴파일러 위치
 compilerPaths: 

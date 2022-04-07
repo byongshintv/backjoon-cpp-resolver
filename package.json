@@ -9,6 +9,7 @@
     "jsom": "^1.0.0",
     "mocha": "^9.0.0",
     "node-fetch": "^2.6.1",
+    "tree-kill": "^1.2.2",
     "typescript": "^4.3.2",
     "yaml": "^1.10.2"
   },

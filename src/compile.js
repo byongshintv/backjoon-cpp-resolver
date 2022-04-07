@@ -1,4 +1,4 @@
-const { execAsync } = require('./io');
+const { execAsync, destroySpawn } = require('./io');
 const Printer = require('./printer');
 const { setting, filePath } = require('./constant');
 

@@ -1,6 +1,6 @@
 const fs = require("fs")
 const path = require('path')
-const { watch, execIO, } = require('./io')
+const { watch, execIO, destroySpawn} = require('./io')
 const { getProblemData } = require('./request')
 const Printer = require('./printer')
 const { StringUtil, asleep } = require('./util')
@@ -9,7 +9,7 @@ const { compile } = require("./compile")
 
 
 async function test(){
-    const { testcase:additionalCase, executeOperator } = setting.get()
+    const { testcase:additionalCase, executeOperator,timeout } = setting.get()
 
     let testCases = JSON.parse(fs.readFileSync(filePath.case, 'utf-8'));
     testCases = testCases.map((v, i) => [...v, `test case ${i + 1}`])
@@ -17,7 +17,7 @@ async function test(){
     testCases = [].concat(testCases, additionalCase.map((v, i) => [...v, `user case ${i + 1}`]))
     for (let [testInput, testOutput, label] of testCases) {
         try{
-
+            setTimeout(destroySpawn,timeout )
             var [result, time] = (await execIO(testInput,executeOperator))
         } catch(e) {
             Printer.err.runtime()
@@ -52,6 +52,7 @@ async function execAndPrint(){
 
 async function main() {
     async function triggeredSource(isClear = true) {
+        destroySpawn();
         const {printOnly: isPrintOnly, canCompile, executeFileName, hideInfomation} = setting.get()
 
         if(canCompile){
@@ -65,8 +66,10 @@ async function main() {
         if( isPrintOnly ) return execAndPrint();
         await test();
         if (canCompile) {
+            destroySpawn()
             await asleep(50)
-            fs.unlinkSync(path.join(__dirname, '..', 'main', executeFileName));
+            let unlinkPath = path.join(__dirname, '..', 'main', executeFileName);
+            if(fs.existsSync(unlinkPath)) fs.unlinkSync(unlinkPath);
         }
     }
     

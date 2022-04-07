@@ -4,23 +4,21 @@ const path = require('path')
 const spawn = require('cross-spawn');
 const {execFile} = require('child_process');
 const YAML = require("yaml");
+const kill  = require('tree-kill');
 
 const watch = {
     file: (target, callback) => {
-        let lastCompile = Date.now()
+        let lastCompile = performance.now()
         const threshold = 100
         async function execute() {
-            if (Date.now() - lastCompile < threshold) return
-            lastCompile = Date.now()
+            if (performance.now() - lastCompile < threshold) return
+            lastCompile = performance.now()
             await asleep(100);
-
             callback(fs.readFileSync(target, "utf-8"));
         }
 
         fs.watch(target, execute)
-
         return { trigger: async (...args) => {
-            
             await asleep(150);
             execute(...args)
         } }
@@ -85,7 +83,7 @@ function parseJSONFile(path){
  let child
 function execIO(input, operation) {
     return new Promise((res, rej) => {
-        if(child) child.stdin.destroy();
+        destroySpawn();
         option = {cwd: path.join(__dirname, '..', 'main')}
 
         if(typeof operation === "string") { child = spawn(operation, option)}
@@ -95,13 +93,13 @@ function execIO(input, operation) {
         
         let result = ""
         let errs = []
-        let start = Date.now();
+        let start = performance.now()
         child.stdin.write(input)
         child.stdout.on('data',(data) => {
             result += data.toString().replace(/\r\n/g,"\n")
         });
         child.stdout.on('end',(data) => {
-            if(errs.length === 0) return res([result,Date.now() - start])
+            if(errs.length === 0) return res([result,(performance.now() - start)])
             rej(result + "\n" + errs.join("\n"))
         });
 
@@ -110,13 +108,16 @@ function execIO(input, operation) {
         });
 
         child.stdin.end();
-
-
-        /*
-        const readable = Readable.from(input.split("\n"))
-        readable.pipe(child.stdin)
-        */
     })
+}
+
+function destroySpawn(){
+    if(child){
+        kill(child.pid)
+        child = undefined;
+        return true
+    }
+    return false;
 }
 
 //비동기로 실행되는 exec 함수, 사용법은 기존 콜백 대신 .then()혹은 await으로 리턴값 받기
@@ -129,4 +130,4 @@ const execAsync = (...args) => {
     })
 }
 
-module.exports = { watch, getLiveJSON, execIO, execAsync, parseJSONFile }
+module.exports = { watch, getLiveJSON, execIO, execAsync, parseJSONFile,destroySpawn }
