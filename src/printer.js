@@ -10,6 +10,12 @@ const printer = {
             print(` - ${label} : ${isOK ? chalk.green("OK") : chalk.red("NG")}(${time.toFixed(setting.get("execTimeFloatPoint"))}ms)`)
         },
         expected:(inputed,expected,result) => {
+            let printLimit = setting.get("printLimit");
+            [inputed,expected,result] = [inputed,expected,result].map( str => {
+                if(str.length > printLimit)
+                    return str.slice(0,printLimit) + "...";
+                return str
+            });
             print(`\t- 입력 :${inputed}`)
             print(`\t- 예측 :${expected}`)
             print(`\t- 결과 :${result}`)

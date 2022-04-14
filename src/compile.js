@@ -23,11 +23,11 @@ async function getCompilerPath(){
         //경우2 컴파일러 경로가 기술된 경우
         let [compilerNotFound] = await execAsync(compilerPath,checkVersionArgs)
         if(compilerNotFound){
+            //return compilerName
             let [defaultCompilerNotFound] = await execAsync(compilerName,checkVersionArgs) 
             if(defaultCompilerNotFound){
                 throw Error(errmsg.notFoundAllCompiler)//적힌 컴파일러 기본 컴파일러 둘 다 없을 경우 예외 반환
             }
-            console.log(errmsg.notFoundDefineCompiler)
             compilerPath = compilerName
         }
     }

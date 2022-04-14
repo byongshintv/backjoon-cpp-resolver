@@ -4,6 +4,7 @@ const path = require("path")
 
 const filePath = {
     setting: path.resolve(__dirname, '../main/setting.yml'),
+    main: path.resolve(__dirname, '../main'),
     case: path.resolve(__dirname, './temp/testcase.json'),
 }
 
@@ -61,6 +62,13 @@ const languageMeta = [
         compile : ({output, input}) => (['-o', path.join('main', 'main'), path.join('main', input)]),
         compilerName : "ghc",
         match : ({input}) => input.match(/\.hs$/),
+    },
+    { 
+        name:"c#",
+        compile : ({output, input}) => ([`/out:${path.join('main', 'main.exe')}`,path.join('main', input) ]),
+        compilerName : "csc",
+        match : ({input}) => input.match(/\.cs$/),
+        versionArgs: '/help'
     },
     {
         name:"default",

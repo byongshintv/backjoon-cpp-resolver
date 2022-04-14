@@ -8,6 +8,10 @@ const  { filePath, setting } = require('./constant')
 const { compile } = require("./compile")
 
 
+function isExistPath(rootPath,str){
+    return !str.match(/\n/) && fs.existsSync(path.resolve(rootPath,str))
+}
+
 async function test(){
     const { testcase:additionalCase, executeOperator,timeout } = setting.get()
 
@@ -15,7 +19,18 @@ async function test(){
     testCases = testCases.map((v, i) => [...v, `test case ${i + 1}`])
 
     testCases = [].concat(testCases, additionalCase.map((v, i) => [...v, `user case ${i + 1}`]))
+
     for (let [testInput, testOutput, label] of testCases) {
+
+        
+        if(isExistPath(filePath.main,testInput)){ // testinput이 경로일때
+            testInput = fs.readFileSync(path.resolve(filePath.main,testInput),'utf-8')
+        }
+
+        if(isExistPath(filePath.main,testOutput)){ // testoutput이 경로일때 경로의 내용 가져옴
+            testOutput = fs.readFileSync(path.resolve(filePath.main,testOutput),'utf-8')
+        }
+        
         try{
             setTimeout(destroySpawn,timeout )
             var [result, time] = (await execIO(testInput,executeOperator))
