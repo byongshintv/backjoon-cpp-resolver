@@ -17,7 +17,7 @@
     "start": "node src/index"
   },
   "name": "backjoon-cpp-resolver",
-  "version": "2.223",
+  "version": "2.5",
   "description": "C++/node 문제풀이",
   "main": "index.js",
   "author": "BANIP",

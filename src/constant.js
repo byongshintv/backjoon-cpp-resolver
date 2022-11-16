@@ -70,6 +70,13 @@ const languageMeta = [
         match : ({input}) => input.match(/\.cs$/),
         versionArgs: '/help'
     },
+    { 
+        name:"lua",
+        execute : (args) => {
+            return [args.compilerPaths.lua,args.input]
+        },
+        match : ({input}) => input.match(/\.lua$/),
+    },
     {
         name:"default",
         execute : ({output}) => `main.exe`,

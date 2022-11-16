@@ -1,6 +1,6 @@
 ---
 # 문제번호 2991
-problemNo: 1000
+problemNo: 6321
 
 # 사용자 테스트 케이스에 적힌 내용만 실행
 printOnly: false
@@ -10,7 +10,7 @@ printOnly: false
 testcase: []
 
 # 입력파일명 (*.c, *.cpp, *.kt, *.py, *.js, Main.java(언어 명세에 의해 반드시 Main.java여야함))지원
-input: main.cs
+input: main.lua
 
 # 문제출력파일
 question: main/question.md
@@ -28,7 +28,7 @@ compilerPaths:
   c: gcc
   java: javac
   kotlin: C:\compiler\kotlinc\bin\kotlinc-native.bat
-  haskell: C:\compiler\ghc\bin\ghc.exe
+  lua: C:\compiler\lua\lua54.exe
   
 # 수행시간의 소수점 반올림 단위
 execTimeFloatPoint: 3
