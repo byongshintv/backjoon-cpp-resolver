@@ -27,6 +27,7 @@ compilerPaths:
   c++: g++
   c: gcc
   java: javac
+  python: python
   kotlin: C:\compiler\kotlinc\bin\kotlinc-native.bat
   lua: C:\compiler\lua\lua54.exe
   
