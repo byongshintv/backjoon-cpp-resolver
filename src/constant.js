@@ -77,6 +77,12 @@ const languageMeta = [
         },
         match : ({input}) => input.match(/\.lua$/),
     },
+    { 
+        name:"rust",
+        compile : ({output, input}) => ([path.join('main', 'main.rs'), '-o','main/main.exe']),
+        compilerName : "rustc",
+        match : ({input}) => input.match(/\.rs$/),
+    },
     {
         name:"default",
         execute : ({output}) => `main.exe`,

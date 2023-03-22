@@ -88,7 +88,7 @@ async function main() {
         }
     }
     
-    fs.readdirSync("./main").filter(v => v.match(/main\.*/i) && !v.match(/exe$/)).forEach(filename => {
+    fs.readdirSync("./main").filter(v => v.match(/main\.*/i) && !v.match(/\.(exe|pdb)$/) ).forEach(filename => {
         watch.file(path.join('main',filename), () => triggeredSource())
     })
 
